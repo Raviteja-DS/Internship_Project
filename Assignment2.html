@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: grey;
+        }
+
+        .delete-icon {
+            color: red;
+            cursor: pointer;
+    
+
+        }
+
+        .select-all{
+            margin-bottom: 10px;
+            
+        }
+
+        .selected-row {
+            background-color: grey /* Light blue color for selected rows */
+        }
+
+        #searchInput {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            margin: 0 4px;
+            cursor: pointer;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            margin: 0 4px;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #45a049;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #45a049;
+        }
+
+        .pagination .arrow {
+            font-size: 16px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <main>
+
+        <div class="select-all">
+            <input type="checkbox" id="selectAll" onchange="selectAllRows()"> 
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search Name,Email,Role" >
+            <i class="fas fa-trash-alt delete-icon" onclick="deleteSelectedRows()"></i> 
+            
+        </div>
+
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>1</td>
+                    <td>Aaron Miles</td>
+                    <td>aaron@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>2</td>
+                    <td>Aishwarya Naik</td>
+                    <td>aishwarya@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>3</td>
+                    <td>Arvind Kumar</td>
+                    <td>arvind@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>4</td>
+                    <td>Caterina Binotto</td>
+                    <td>caterina@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>5</td>
+                    <td>Chetan Kumar</td>
+                    <td>chetan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>6</td>
+                    <td>Jim McClain</td>
+                    <td>jim@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>7</td>
+                    <td>Mahaveer Singh</td>
+                    <td>mahaveer@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>8</td>
+                    <td>Rahul Jan</td>
+                    <td>rahul@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>9</td>
+                    <td>Rizan Khan</td>
+                    <td>rizan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>10</td>
+                    <td>Sarah Potter</td>
+                    <td>sarah@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <td><input type="checkbox"></td>
+                    <td>11</td>
+                    <td>Karon Mies</td>
+                    <td>karon@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>12</td>
+                    <td>Aishwarya Nair</td>
+                    <td>naishwarya@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>13</td>
+                    <td>Sarvind Kumar</td>
+                    <td>sarvind@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>14</td>
+                    <td>Cafterina Binotto</td>
+                    <td>cafterina@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>15</td>
+                    <td>Cheetan Kumar</td>
+                    <td>cheetan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>16</td>
+                    <td>Jikim McClain</td>
+                    <td>jikim@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>17</td>
+                    <td>Haveer Singh</td>
+                    <td>haveer@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>18</td>
+                    <td>Ratul Jan</td>
+                    <td>ratul@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>19</td>
+                    <td>Rizvan Khan</td>
+                    <td>rizvan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>20</td>
+                    <td>Mirah Potter</td>
+                    <td>mirah@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>21</td>
+                    <td>Eron Miles</td>
+                    <td>eron@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>22</td>
+                    <td>ishwarya Naik</td>
+                    <td>ishwarya@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>23</td>
+                    <td>Harvind Kumar</td>
+                    <td>harvind@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>24</td>
+                    <td>Katerina Binotto</td>
+                    <td>katerina@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>25</td>
+                    <td>Cheytan Kumar</td>
+                    <td>cheytan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>26</td>
+                    <td>Kim McClain</td>
+                    <td>kim@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>27</td>
+                    <td>Jahaveer Singh</td>
+                    <td>jahaveer@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>28</td>
+                    <td>Rajul Jan</td>
+                    <td>rajul@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>29</td>
+                    <td>Kizan Khan</td>
+                    <td>kizan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>30</td>
+                    <td>Farah Potter</td>
+                    <td>farah@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                        <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                        <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                    </td>
+                </tr>
+                <td><input type="checkbox"></td>
+                    <td>31</td>
+                    <td>Maron Mies</td>
+                    <td>maron@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>32</td>
+                    <td>Eshwarya Nair</td>
+                    <td>eishwarya@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>33</td>
+                    <td>Rarvind Kumar</td>
+                    <td>rarvind@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>34</td>
+                    <td>Lafterina Binotto</td>
+                    <td>lafterina@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>35</td>
+                    <td>Seetan Kumar</td>
+                    <td>seetan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>36</td>
+                    <td>Jukim McClain</td>
+                    <td>jukim@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>37</td>
+                    <td>Hareer Singh</td>
+                    <td>hareer@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>38</td>
+                    <td>Rakul Jan</td>
+                    <td>rakul@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>39</td>
+                    <td>Izvan Khan</td>
+                    <td>izvan@mailinator.com</td>
+                    <td>member</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>40</td>
+                    <td>Kirah Potter</td>
+                    <td>kirah@mailinator.com</td>
+                    <td>admin</td>
+                    <td>
+                    <i class="fas fa-edit edit-icon" onclick="editRow(this)"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteRow(this)"></i>
+                </td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+        
+    </main>
+
+    <footer>
+        &copy; Ravi Teja Dashboard
+    </footer>
+
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+
+        
+        var currentPage = 1;
+        var rowsPerPage = 10; 
+        var totalRecords = 25;// Adjust the number of rows per page as needed
+
+        
+
+        function selectAllRows() {
+            var checkboxes = document.querySelectorAll('#dataTable tbody input[type="checkbox"]');
+            var selectAllCheckbox = document.getElementById('selectAll');
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = selectAllCheckbox.checked;
+                highlightRow(checkbox);
+            });
+        }
+
+        function deleteSelectedRows() {
+            var checkboxes = document.querySelectorAll('#dataTable tbody input[type="checkbox"]:checked');
+            checkboxes.forEach(function (checkbox) {
+                var row = checkbox.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+            });
+        }
+
+        function highlightRow(checkbox) {
+            var row = checkbox.parentNode.parentNode;
+            if (checkbox.checked) {
+                row.classList.add('selected-row');
+            } else {
+                row.classList.remove('selected-row');
+            }
+        }
+
+        function searchTable() {
+            // Similar to the previous example, but consider the pagination
+            
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("dataTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            
+        }
+        
+        }
+
+        function editRow(icon) {
+            // Get the row index based on the icon's position
+            var rowIndex = icon.closest("tr").rowIndex;
+            alert("Editing row " + rowIndex);
+            // Implement your edit logic here
+        }
+
+        function updateTable() {
+            var table = document.getElementById("dataTable");
+            var tbody = table.getElementsByTagName("tbody")[0];
+            var rows = tbody.getElementsByTagName("tr");
+            var totalRows = rows.length;
+
+            var startIndex = (currentPage - 1) * rowsPerPage;
+            var endIndex = startIndex + rowsPerPage;
+
+            for (var i = 0; i < totalRows; i++) {
+                if (i >= startIndex && i < endIndex) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+
+            updatePagination();
+        }
+
+    function updatePagination() {
+    var table = document.getElementById("dataTable");
+    var tbody = table.getElementsByTagName("tbody")[0];
+    var rows = tbody.getElementsByTagName("tr");
+    var totalRows = rows.length;
+    var totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    var pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    // First page button with double-left arrow
+    var firstPageButton = document.createElement("a");
+    firstPageButton.href = "#";
+    firstPageButton.innerHTML = "&lt;&lt;";
+    firstPageButton.onclick = function () {
+        currentPage = 1;
+        updateTable();
+    };
+    pagination.appendChild(firstPageButton);
+
+    // Previous 2 pages button
+    if (currentPage > 2) {
+        var previousPagesButton = document.createElement("a");
+        previousPagesButton.href = "#";
+        previousPagesButton.innerHTML = "&lt;";
+        previousPagesButton.onclick = function () {
+            currentPage = Math.max(1, currentPage - 2);
+            updateTable();
+        };
+        pagination.appendChild(previousPagesButton);
+    }
+
+    // Page buttons
+    for (var i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+        var pageLink = document.createElement("a");
+        pageLink.href = "#";
+        pageLink.textContent = i;
+
+        if (i === currentPage) {
+            pageLink.classList.add("active");
+        }
+
+        pageLink.onclick = function () {
+            currentPage = parseInt(this.textContent);
+            updateTable();
+        };
+
+        pagination.appendChild(pageLink);
+    }
+
+    // Next 2 pages button
+    if (currentPage + 2 < totalPages) {
+        var nextPagesButton = document.createElement("a");
+        nextPagesButton.href = "#";
+        nextPagesButton.innerHTML = "&gt;";
+        nextPagesButton.onclick = function () {
+            currentPage = Math.min(totalPages, currentPage + 2);
+            updateTable();
+        };
+        pagination.appendChild(nextPagesButton);
+    }
+
+    // Last page button with double-right arrow
+    var lastPageButton = document.createElement("a");
+    lastPageButton.href = "#";
+    lastPageButton.innerHTML = "&gt;&gt;";
+    lastPageButton.onclick = function () {
+        currentPage = totalPages;
+        updateTable();
+    };
+    pagination.appendChild(lastPageButton);
+}
+
+
+
+
+        // Initial table update
+        updateTable();
+
+        function deleteRow(icon) {
+            var row = icon.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+</body>
+</html>
